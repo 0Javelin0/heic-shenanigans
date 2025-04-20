@@ -1,67 +1,150 @@
-# 🖼️ HEIC Image Extractor
+# 🖼️ HEIC Image Processing Tools
 
-A Python tool for extracting all components from HEIC (High Efficiency Image Container) files, including HDR gain maps, depth maps, and metadata.
+A collection of Python tools for processing HEIC (High Efficiency Image Container) files, with a focus on HDR content extraction and EXR conversion.
 
-## ✨ Features
+## 🛠️ Tools Overview
 
-- 📸 Extracts the base image from HEIC files
-- 🎨 Extracts auxiliary images including gain maps (for HDR)
-- 📊 Extracts depth maps when available
-- 📝 Preserves all metadata including:
-  - 🎨 ICC color profiles
-  - 📸 EXIF data
-  - 📄 XMP metadata
-  - 🔄 Other auxiliary image data
+### 1. gain_map_extract.py
+Extracts all components from HEIC files including:
+- Base images
+- HDR gain maps
+- Depth maps
+- Complete metadata (EXIF, XMP, ICC profiles)
+
+### 2. heic_to_exr.py
+Converts HEIC files to OpenEXR format:
+- Combines base image and gain map into HDR EXR
+- Preserves full dynamic range
+- Maintains metadata where possible
+- Supports batch processing
+
+### 3. merge_to_exr.sh
+Shell script for batch processing:
+- Automates HEIC to EXR conversion
+- Handles multiple files
+- Provides progress feedback
+- Maintains directory structure
+
+## 🔧 Installation
+
+### Prerequisites
+- Python 3.8 or higher
+- pip (Python package manager)
+- Git (for cloning the repository)
+
+### macOS
+```bash
+# Install Homebrew if not already installed
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Python and OpenEXR dependencies
+brew install python3 openexr
+
+# Clone the repository
+git clone https://github.com/finnschi/heic-shenanigans.git
+cd heic-shenanigans
+
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install Python dependencies
+pip install -r requirements.txt
+```
+
+### Linux (Ubuntu/Debian)
+```bash
+# Install system dependencies
+sudo apt-get update
+sudo apt-get install python3 python3-pip python3-venv openexr libopenexr-dev
+
+# Clone the repository
+git clone https://github.com/finnschi/heic-shenanigans.git
+cd heic-shenanigans
+
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install Python dependencies
+pip install -r requirements.txt
+```
+
+### Windows
+```powershell
+# Install Python from https://www.python.org/downloads/
+# Install Git from https://git-scm.com/download/win
+
+# Clone the repository
+git clone https://github.com/finnschi/heic-shenanigans.git
+cd heic-shenanigans
+
+# Create and activate virtual environment
+python -m venv venv
+.\venv\Scripts\activate
+
+# Install Python dependencies
+pip install -r requirements.txt
+```
 
 ## 📋 Requirements
+All required Python packages are listed in requirements.txt:
+- Pillow: Image processing library
+- pillow-heif: HEIC file support
+- numpy: Numerical operations
+- defusedxml: Safe XML parsing
 
-- 🐍 Python 3.x
-- 📦 Required Python packages:
-  - Pillow
-  - pillow-heif
-  - numpy
+System dependencies (installed via package manager):
+- OpenEXR and OpenImageIO (oiiotool) for EXR file handling
 
 ## 💻 Usage
 
+### Gain Map Extraction
 ```bash
 python gain_map_extract.py input.heic [--output-dir OUTPUT_DIR]
 ```
 
-### ⚙️ Arguments
-
-- `input`: Path to the input HEIC image
-- `--output-dir`: (Optional) Directory where extracted files will be saved. If not specified, files will be saved in the same directory as the input file.
-
-### 📁 Output Files
-
-For each input HEIC file, the tool generates:
-
-1. 📸 Base image: `{filename}_base.tiff`
-2. 🎨 Auxiliary images (if present): `{filename}_{aux_type}_{id}.tiff`
-3. 📊 Depth maps (if present): `{filename}_depth_{index}.tiff`
-4. 📄 Metadata: `{filename}_metadata.json`
-
-The metadata JSON file contains:
-- 📐 Image information (mode, size, stride)
-- 🎨 ICC profile data
-- 📸 EXIF data
-- 📄 XMP metadata
-- 🔄 All auxiliary image information
-
-## 🚀 Example
-
+### HEIC to EXR Conversion
 ```bash
-python gain_map_extract.py photo.heic --output-dir extracted_images
+python heic_to_exr.py input.heic [--output-dir OUTPUT_DIR]
 ```
 
-This will create:
-- 📸 `extracted_images/photo_base.tiff`
-- 🎨 `extracted_images/photo_gain_map_1.tiff` (if HDR gain map exists)
-- 📊 `extracted_images/photo_depth_0.tiff` (if depth map exists)
-- 📄 `extracted_images/photo_metadata.json`
+### Batch Processing
+```bash
+./merge_to_exr.sh input_directory output_directory
+```
 
-## 📝 Notes
+## 📁 Output Files
 
-- 🎯 All images are saved in TIFF format to preserve maximum quality
-- 🔄 The tool handles both standard HEIC files and HDR HEIC files
-- 🔐 Metadata is base64 encoded in the JSON file to handle binary data
+### gain_map_extract.py outputs:
+- Base image: `{filename}_base.tiff`
+- Gain maps: `{filename}_gain_map_{id}.tiff`
+- Depth maps: `{filename}_depth_{index}.tiff`
+- Metadata: `{filename}_metadata.json`
+
+### heic_to_exr.py outputs:
+- HDR EXR file: `{filename}.exr`
+
+## 🔍 Advanced Usage
+
+### Metadata Handling
+- All metadata is preserved in JSON format
+- Binary data is base64 encoded
+- ICC profiles are maintained
+- EXIF data is preserved where possible
+
+### HDR Processing
+- Gain maps are properly scaled
+- Linear color space is maintained
+- Full dynamic range is preserved in EXR output
+
+## ⚠️ Known Limitations
+- Some HEIC variants may not be fully supported
+- Depth map extraction is limited to supported devices
+- Windows OpenEXR support may require additional configuration
+
+## 🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
