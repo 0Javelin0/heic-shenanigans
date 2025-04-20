@@ -13,7 +13,7 @@ Extracts all components from HEIC files including:
 
 ### 2. heic_to_exr.py
 Converts HEIC files to OpenEXR format:
-- Combines base image and gain map into HDR EXR
+- Combines base image and gain map into HDR EXR using apples method
 - Preserves full dynamic range
 - Maintains metadata where possible
 - Supports batch processing
@@ -128,7 +128,6 @@ python heic_to_exr.py input.heic [--output-dir OUTPUT_DIR]
 ## 🔍 Advanced Usage
 
 ### Metadata Handling
-- All metadata is preserved in JSON format
 - Binary data is base64 encoded
 - ICC profiles are maintained
 - EXIF data is preserved where possible
@@ -146,5 +145,4 @@ python heic_to_exr.py input.heic [--output-dir OUTPUT_DIR]
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+
